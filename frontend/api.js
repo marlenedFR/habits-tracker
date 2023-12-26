@@ -10,6 +10,20 @@ const api = {
     }
     return await response.json();
   },
+
+  patch: async (path, data) => {
+    const response = await fetch(`${BASE_URL}${path}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP. Statut : ${response.status}`);
+    }
+    return await response.json();
+  },
 };
 
 export { api };

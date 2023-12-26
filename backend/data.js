@@ -32,15 +32,17 @@ const addHabit = async (newHabit) => {
 
 const updateHabit = async (request, reply) => {
   const habitId = parseInt(request.params.id);
+  const { habitIsDone } = request.body;
   const data = await loadData();
 
   const today = formatDate(new Date());
   const habit = data.habits.find((h) => h.id === habitId);
 
   if (!habit) {
-    return reply.reply.status(404).send("Habitude non trouvée.");
+    reply.code(404).send("Habitude non trouvée.");
+    return;
   }
-  habit.daysDone[today] = !habit.daysDone[today];
+  habit.daysDone[today] = habitIsDone;
   await saveData(data);
 };
 
