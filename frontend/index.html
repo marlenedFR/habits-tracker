@@ -5,6 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/M_transparent.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Habits Tracker</title>
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <div id="app">
@@ -12,8 +13,14 @@
       <div id="habits">
         <ul id="habitsList"></ul>
       </div>
-      <div id="add-habit">
-        <button id="add-habit-button">Ajouter</button>
+      <button id="add-habit-button">Ajouter</button>
+
+      <div id="add-habit-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Ajouter une nouvelle habitude</p>
+          <input type="text" id="habit-input" placeholder="Nom de l'habitude" />
+        </div>
       </div>
       <div id="history">
         <button id="history-button">Historique</button>

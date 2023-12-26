@@ -3,8 +3,9 @@
 import "./style.css";
 
 import { HabitsList } from "./HabitsList.js";
+import { Modal } from "./Modal";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const habitsList = new HabitsList("habitsList");
-  habitsList.displayHabits();
+  new HabitsList("habitsList");
+  new Modal("add-habit-modal", "habit-input");
 });

@@ -8,6 +8,7 @@ class HabitsList {
   constructor(listElementId) {
     this.listElement = document.getElementById(listElementId);
     this.habitsToggle = new HabitsToggle(this.listElement);
+    this.displayHabits();
   }
 
   displayHabits = async () => {
@@ -16,7 +17,7 @@ class HabitsList {
       const habits = response.habits;
 
       habits.forEach((habit) => {
-        const listItem = document.createElement("li");
+        const listItem = document.createElement("ul");
         listItem.textContent = habit.title;
         listItem.addEventListener("click", () => {
           const habitIsDone = !listItem.classList.contains("habit-done");
