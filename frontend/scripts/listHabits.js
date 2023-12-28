@@ -1,13 +1,13 @@
 // frontend/listHabits.js
 // Gère l'affichage des habitudes. La class se charge de récupèrer les habitudes via l'API et les afficher
 
-import { HabitsToggle } from "./toggleHabits.js";
+import { toggleHabits } from "./toggleHabits.js";
 import { api } from "../utils/api.js";
 
 class listHabits {
   constructor(listElementId) {
     this.listElement = document.getElementById(listElementId);
-    this.habitsToggle = new HabitsToggle(this.listElement);
+    this.toggleHabits = new toggleHabits(this.listElement);
     this.displayHabits();
   }
 
@@ -21,8 +21,8 @@ class listHabits {
         listItem.textContent = habit.title;
         listItem.addEventListener("click", () => {
           const habitIsDone = !listItem.classList.contains("habit-done");
-          this.habitsToggle.toggleHabit(listItem);
-          this.habitsToggle.updateHabit(habit.id, habitIsDone);
+          this.toggleHabits.toggleHabit(listItem);
+          this.toggleHabits.updateHabit(habit.id, habitIsDone);
         });
         this.listElement.appendChild(listItem);
       });
