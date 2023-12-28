@@ -33,6 +33,11 @@ class listHabits {
       );
     }
   };
+
+  updateList = () => {
+    this.listElement.innerHTML = "";
+    this.displayHabits();
+  };
 }
 
 export { listHabits };

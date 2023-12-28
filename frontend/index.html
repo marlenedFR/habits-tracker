@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- frontend//index.html -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,7 +20,15 @@
         <div class="modal-content">
           <span class="close">&times;</span>
           <p>Ajouter une nouvelle habitude</p>
-          <input type="text" id="habit-input" placeholder="Nom de l'habitude" />
+          <form id="habit-form">
+            <input
+              type="text"
+              name="habit-title"
+              id="habit-input"
+              placeholder="Nom de l'habitude"
+            />
+            <button type="submit" id="add-habit">Ajouter</button>
+          </form>
         </div>
       </div>
       <div id="history">
