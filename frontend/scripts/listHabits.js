@@ -1,10 +1,10 @@
-// frontend/HabitsList.js
+// frontend/listHabits.js
 // Gère l'affichage des habitudes. La class se charge de récupèrer les habitudes via l'API et les afficher
 
-import { HabitsToggle } from "./HabitsToggle.js";
-import { api } from "./api.js";
+import { HabitsToggle } from "./toggleHabits.js";
+import { api } from "../utils/api.js";
 
-class HabitsList {
+class listHabits {
   constructor(listElementId) {
     this.listElement = document.getElementById(listElementId);
     this.habitsToggle = new HabitsToggle(this.listElement);
@@ -35,4 +35,4 @@ class HabitsList {
   };
 }
 
-export { HabitsList };
+export { listHabits };
