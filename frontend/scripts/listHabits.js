@@ -17,8 +17,9 @@ class listHabits {
       const habits = response.habits;
 
       habits.forEach((habit) => {
-        const listItem = document.createElement("ul");
+        const listItem = document.createElement("li");
         listItem.textContent = habit.title;
+        listItem.classList.add("habit-not-done");
         listItem.addEventListener("click", () => {
           const habitIsDone = !listItem.classList.contains("habit-done");
           this.toggleHabits.toggleHabit(listItem);

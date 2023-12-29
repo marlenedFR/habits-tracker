@@ -13,16 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
+  background: #ffffff;
   margin: 0;
   display: flex;
   place-items: center;
@@ -31,6 +23,8 @@ body {
 }
 
 h1 {
+  font-family: "Roboto", sans-serif;
+  color: #213547;
   font-size: 3.2em;
   line-height: 1.1;
 }
@@ -42,41 +36,58 @@ h1 {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+#listHabits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  list-style-type: none;
 }
 
-.card {
-  padding: 2em;
+#listHabits li {
+  color: #000000;
+  margin: 5px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  text-align: center;
+  max-width: 350px;
 }
 
-.read-the-docs {
-  color: #888;
+#listHabits .habit-done {
+  background-color: #28a7463b;
+  border: 1px solid #28a745;
+}
+
+.habit-not-done {
+  background-color: #dc35464e;
+  border: 1px solid #dc3545;
 }
 
 button {
+  background-color: #5c7aea;
+  color: #ffffff;
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid #5c7aea;
   padding: 0.6em 1.2em;
+  margin-top: 1em;
+  margin-bottom: -0.5em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre des boutons */
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: #4258c9; /* Changement de couleur au survol */
+  color: #f4f4f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre des boutons */
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -85,6 +96,8 @@ button:focus-visible {
 /* Style de base pour la modal */
 .modal {
   display: none;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -92,17 +105,22 @@ button:focus-visible {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.782);
 }
 
 /* Style du contenu de la modal */
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  border-radius: em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée pour la modale */
+  max-width: 500px;
+  max-height: 300px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 /* Bouton pour fermer la modal */
@@ -110,9 +128,10 @@ button:focus-visible {
   color: #aaa;
   float: right;
   font-size: 28px;
-  font-weight: bold;
-  margin-right: 10px;
   cursor: pointer;
+  top: -0.4em;
+  right: 0.2em;
+  position: absolute;
 }
 
 .close:hover,
@@ -138,8 +157,5 @@ button:focus-visible {
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }
