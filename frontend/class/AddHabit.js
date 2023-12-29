@@ -1,29 +1,15 @@
-// frontend/addHabit.js
-// Gère l'ajout d'une habitude via le formulaire
+//frontend/AddHabit.js
+// Ajouter une habitude via une modale
 
 import { api } from "../utils/api.js";
+import { Modal } from "./Modal.js";
 
-class addHabit {
-  constructor(formElementId, modalButtonId, onCloseModal, onUpdateList) {
+class AddHabit {
+  constructor(formElementId, modalId, onUpdateList) {
     this.formElement = document.getElementById(formElementId);
-    this.modalButton = document.getElementById(modalButtonId);
-    this.onCloseModal = onCloseModal;
+    this.modal = new Modal(modalId);
     this.onUpdateList = onUpdateList;
-    this.formElement.addEventListener("submit", this.handleSubmit);
-
-    this.modalButton.onclick = () => {
-      if (this.onCloseModal) {
-        this.onCloseModal();
-      }
-      this.showModal();
-    };
-  }
-
-  showModal() {
-    const modal = this.formElement.closest(".modal");
-    if (modal) {
-      modal.style.display = "block";
-    }
+    this.formElement.addEventListener("submit", this.handleSubmit.bind(this));
   }
 
   handleSubmit = async (event) => {
@@ -45,15 +31,16 @@ class addHabit {
 
       if (response.status === "success") {
         console.log("Habitude ajoutée avec succès");
-        this.onCloseModal();
-        this.onUpdateList();
       } else {
         console.error("Erreur lors de l'ajout de l'habitude.");
       }
     } catch (err) {
       console.error("Erreur lors de l'ajout de l'habitude :", err);
     }
+
+    this.modal.hide();
+    this.onUpdateList();
   };
 }
 
-export { addHabit };
+export { AddHabit };

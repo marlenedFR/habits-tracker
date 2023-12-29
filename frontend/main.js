@@ -2,26 +2,22 @@
 // Point d'entrée principal de l'application front qui utilise les autres modules pour démarrer l'application
 import "./style.css";
 
-import { Modal } from "./scripts/modal";
-import { addHabit } from "./scripts/addHabit";
-import { listHabits } from "./scripts/listHabits";
-import { History } from "./scripts/history";
+import { AddHabit } from "./class/AddHabit";
+import { ListHabits } from "./class/ListHabits";
+import { History } from "./class/History";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const addHabitModal = new Modal("add-habit-modal", "habit-input");
-  const history = new History("history-modal", "history-button", () =>
-    addHabitModal.hide()
+  const habitsList = new ListHabits("listHabits");
+  const AddHabitInstance = new AddHabit("habit-form", "add-habit-modal", () =>
+    habitsList.updateList()
   );
-  const habitsList = new listHabits("listHabits");
+  const HistoryInstance = new History("history-modal");
 
-  new addHabit(
-    "habit-form",
-    "add-habit-button",
-    () => addHabitModal.hide(),
-    () => habitsList.updateList()
-  );
+  document.getElementById("add-habit-button").addEventListener("click", () => {
+    AddHabitInstance.modal.show();
+  });
 
   document.getElementById("history-button").addEventListener("click", () => {
-    history.buildAndShowHistory();
+    HistoryInstance.buildAndShowHistory();
   });
 });

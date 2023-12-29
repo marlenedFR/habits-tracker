@@ -1,26 +1,43 @@
+//frontend/history.js
+// Affiche l'historique des habitudes
+
 import { api } from "../utils/api.js";
+import { Modal } from "./Modal.js";
 
 class History {
   constructor(modalId) {
-    this.modal = document.getElementById(modalId);
+    this.modal = new Modal(modalId);
   }
 
   showModal() {
-    this.modal.style.display = "block";
+    this.modal.show();
   }
 
   hideModal() {
-    this.modal.style.display = "none";
+    this.modal.hide();
   }
 
-  async buildAndShowHistory() {
+  fetchData = async () => {
     try {
       const response = await api.get("/habits");
 
       if (!response || !Array.isArray(response.habits)) {
         throw new Error("La réponse de l'API n'est pas un tableau");
       }
-      const habits = response.habits;
+      return response.habits;
+    } catch (err) {
+      console.error("Erreur lors de la récupération des habitudes :", err);
+      throw err;
+    }
+  };
+
+  buildAndShowHistory = async () => {
+    try {
+      const habits = await this.fetchData();
+
+      const closeButton = document.createElement("span");
+      closeButton.className = "close";
+      closeButton.innerHTML = "&times;";
 
       const historyTitle = document.createElement("div");
       historyTitle.textContent = "Historique des habitudes";
@@ -28,16 +45,25 @@ class History {
 
       // Créez le tableau et ajoutez-le à .modal-content
       const table = this.createHistoryTable(habits);
-      const modalContent = this.modal.querySelector(".modal-content");
+      const modalContent = this.modal.getContentElement();
       modalContent.innerHTML = ""; // Sécurisé car nous contrôlons le contenu qui est ajouté ensuite.
       modalContent.appendChild(historyTitle);
       modalContent.appendChild(table);
+
+      modalContent.appendChild(closeButton);
+
+      modalContent.appendChild(historyTitle);
+      modalContent.appendChild(table);
+
+      closeButton.onclick = () => {
+        this.hideModal();
+      };
 
       this.showModal();
     } catch (err) {
       console.error("Erreur lors de la construction de l'historique :", err);
     }
-  }
+  };
 
   createHistoryTable(habits) {
     const table = document.createElement("table");

@@ -5,7 +5,7 @@ class Modal {
   constructor(modalId, inputId) {
     this.modal = document.getElementById(modalId);
     this.input = document.getElementById(inputId);
-    this.closeButton = document.querySelector(".close");
+    this.closeButton = this.modal.querySelector(".close");
 
     this.closeButton.onclick = () => {
       this.hide();
@@ -27,6 +27,10 @@ class Modal {
 
   hide() {
     this.modal.style.display = "none";
+  }
+
+  getContentElement() {
+    return this.modal.querySelector(".modal-content");
   }
 }
 

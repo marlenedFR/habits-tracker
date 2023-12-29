@@ -1,9 +1,9 @@
-// frontend/toggleHabits.js
+// frontend/ToggleHabits.js
 // Gère le toggle sur une tâche selon qu'elle soit true ou false
 
 import { api } from "../utils/api.js";
 
-class toggleHabits {
+class ToggleHabits {
   constructor(listElement) {
     this.listElement = listElement;
   }
@@ -33,4 +33,4 @@ class toggleHabits {
   };
 }
 
-export { toggleHabits };
+export { ToggleHabits };
