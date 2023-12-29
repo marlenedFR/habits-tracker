@@ -15,16 +15,24 @@ class listHabits {
     try {
       const response = await api.get("/habits");
       const habits = response.habits;
+      const today = new Date().toISOString().split("T")[0];
 
       habits.forEach((habit) => {
         const listItem = document.createElement("li");
         listItem.textContent = habit.title;
-        listItem.classList.add("habit-not-done");
+
+        if (habit.daysDone[today]) {
+          listItem.classList.add("habit-done");
+        } else {
+          listItem.classList.add("habit-not-done");
+        }
+
         listItem.addEventListener("click", () => {
           const habitIsDone = !listItem.classList.contains("habit-done");
-          this.toggleHabits.toggleHabit(listItem);
+          this.toggleHabits.toggleHabit(listItem, habitIsDone);
           this.toggleHabits.updateHabit(habit.id, habitIsDone);
         });
+
         this.listElement.appendChild(listItem);
       });
     } catch (err) {

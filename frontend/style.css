@@ -114,7 +114,7 @@ button:focus-visible {
   padding: 20px;
   border: 1px solid #888;
   border-radius: em;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée pour la modale */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 500px;
   max-height: 300px;
   transform: translate(-50%, -50%);

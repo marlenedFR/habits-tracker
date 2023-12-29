@@ -8,18 +8,17 @@ class toggleHabits {
     this.listElement = listElement;
   }
 
-  toggleHabit = (listItem) => {
-    listItem.classList.toggle("habit-done");
+  toggleHabit = (listItem, habitIsDone) => {
+    if (habitIsDone) {
+      listItem.classList.remove("habit-not-done");
+      listItem.classList.add("habit-done");
+    } else {
+      listItem.classList.remove("habit-done");
+      listItem.classList.add("habit-not-done");
+    }
   };
 
   updateHabit = async (habitId, habitIsDone) => {
-    console.log(
-      "updateHabit appelée avec habitId:",
-      habitId,
-      "et habitIsDone :",
-      habitIsDone
-    );
-
     try {
       const response = await api.patch(`/habits/${habitId}`, { habitIsDone });
 

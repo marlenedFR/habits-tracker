@@ -1,20 +1,11 @@
 // frontend/Modal.js
-// Gère l'affichage de la modale pour ajouter une habitude
+// Gère l'affichage et la fermeture de la modale
 
 class Modal {
   constructor(modalId, inputId) {
     this.modal = document.getElementById(modalId);
     this.input = document.getElementById(inputId);
     this.closeButton = document.querySelector(".close");
-    this.initModal();
-  }
-
-  initModal() {
-    const modalButton = document.getElementById("add-habit-button");
-
-    modalButton.onclick = () => {
-      this.show();
-    };
 
     this.closeButton.onclick = () => {
       this.hide();
@@ -29,7 +20,9 @@ class Modal {
 
   show() {
     this.modal.style.display = "block";
-    this.input.value = "";
+    if (this.input) {
+      this.input.value = "";
+    }
   }
 
   hide() {

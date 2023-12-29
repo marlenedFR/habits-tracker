@@ -4,11 +4,26 @@
 import { api } from "../utils/api.js";
 
 class addHabit {
-  constructor(formElementId, onCloseModal, onUpdateList) {
+  constructor(formElementId, modalButtonId, onCloseModal, onUpdateList) {
     this.formElement = document.getElementById(formElementId);
+    this.modalButton = document.getElementById(modalButtonId);
     this.onCloseModal = onCloseModal;
     this.onUpdateList = onUpdateList;
     this.formElement.addEventListener("submit", this.handleSubmit);
+
+    this.modalButton.onclick = () => {
+      if (this.onCloseModal) {
+        this.onCloseModal();
+      }
+      this.showModal();
+    };
+  }
+
+  showModal() {
+    const modal = this.formElement.closest(".modal");
+    if (modal) {
+      modal.style.display = "block";
+    }
   }
 
   handleSubmit = async (event) => {

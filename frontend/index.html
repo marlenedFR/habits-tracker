@@ -15,6 +15,7 @@
         <ul id="listHabits"></ul>
       </div>
       <button id="add-habit-button">Ajouter</button>
+
       <div id="add-habit-modal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
@@ -30,8 +31,16 @@
           </form>
         </div>
       </div>
+
       <div id="history">
         <button id="history-button">Historique</button>
+        <div id="history-modal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Historique</p>
+            <div id="history-list"></div>
+          </div>
+        </div>
       </div>
     </div>
     <script type="module" src="/main.js"></script>
