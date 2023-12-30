@@ -3,32 +3,33 @@
 
 import { api } from "../utils/api.js";
 
+const CLASS_NAMES = {
+  habitDone: "habit-done",
+  habitNotDone: "habit-not-done",
+};
+
+const ERROR_MESSAGES = {
+  updateError: "Erreur lors de la mise à jour de l'habitude.",
+};
+
 class ToggleHabits {
   constructor(listElement) {
     this.listElement = listElement;
   }
 
   toggleHabit = (listItem, habitIsDone) => {
-    if (habitIsDone) {
-      listItem.classList.remove("habit-not-done");
-      listItem.classList.add("habit-done");
-    } else {
-      listItem.classList.remove("habit-done");
-      listItem.classList.add("habit-not-done");
-    }
+    listItem.classList.toggle(CLASS_NAMES.habitDone, habitIsDone);
+    listItem.classList.toggle(CLASS_NAMES.habitNotDone, !habitIsDone);
   };
 
   updateHabit = async (habitId, habitIsDone) => {
     try {
       const response = await api.patch(`/habits/${habitId}`, { habitIsDone });
-
-      if (response.status === "success") {
-        // console.log("Habitude mise à jour avec succès");
-      } else {
-        console.error("Erreur lors de la mise à jour de l'habitude.");
+      if (response.status !== "success") {
+        console.error(ERROR_MESSAGES.updateError);
       }
     } catch (err) {
-      console.error("Erreur lors de la mise à jour de l'habitude :", err);
+      console.error(ERROR_MESSAGES.updateError, err);
     }
   };
 }

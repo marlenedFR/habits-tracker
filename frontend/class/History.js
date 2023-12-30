@@ -1,32 +1,42 @@
 //frontend/history.js
-// Affiche l'historique des habitudes
+// Affiche l'historique des habitudesimport { api } from "../utils/api.js";
 
 import { api } from "../utils/api.js";
 import { Modal } from "./Modal.js";
+
+const SELECTORS = {
+  closeButton: ".close",
+  historyTitle: "history-title",
+  historyTable: "history-table",
+};
+
+const ERROR_MESSAGES = {
+  fetchError: "Erreur lors de la récupération des habitudes.",
+  buildError: "Erreur lors de la construction de l'historique.",
+};
 
 class History {
   constructor(modalId) {
     this.modal = new Modal(modalId);
   }
 
-  showModal() {
+  showModal = () => {
     this.modal.show();
-  }
+  };
 
-  hideModal() {
+  hideModal = () => {
     this.modal.hide();
-  }
+  };
 
   fetchData = async () => {
     try {
       const response = await api.get("/habits");
-
       if (!response || !Array.isArray(response.habits)) {
-        throw new Error("La réponse de l'API n'est pas un tableau");
+        throw new Error(ERROR_MESSAGES.fetchError);
       }
       return response.habits;
     } catch (err) {
-      console.error("Erreur lors de la récupération des habitudes :", err);
+      console.error(ERROR_MESSAGES.fetchError, err);
       throw err;
     }
   };
@@ -34,55 +44,50 @@ class History {
   buildAndShowHistory = async () => {
     try {
       const habits = await this.fetchData();
-
-      const closeButton = document.createElement("span");
-      closeButton.className = "close";
-      closeButton.innerHTML = "&times;";
-
-      const historyTitle = document.createElement("div");
-      historyTitle.textContent = "Historique des habitudes";
-      historyTitle.className = "history-title";
-
-      // Créez le tableau et ajoutez-le à .modal-content
-      const table = this.createHistoryTable(habits);
       const modalContent = this.modal.getContentElement();
-      modalContent.innerHTML = ""; // Sécurisé car nous contrôlons le contenu qui est ajouté ensuite.
-      modalContent.appendChild(historyTitle);
-      modalContent.appendChild(table);
-
-      modalContent.appendChild(closeButton);
-
-      modalContent.appendChild(historyTitle);
-      modalContent.appendChild(table);
-
-      closeButton.onclick = () => {
-        this.hideModal();
-      };
-
+      modalContent.innerHTML = "";
+      modalContent.appendChild(this.createHistoryTitle());
+      modalContent.appendChild(this.createHistoryTable(habits));
+      this.setupCloseButton(modalContent);
       this.showModal();
     } catch (err) {
-      console.error("Erreur lors de la construction de l'historique :", err);
+      console.error(ERROR_MESSAGES.buildError, err);
     }
   };
 
-  createHistoryTable(habits) {
+  createHistoryTitle = () => {
+    const historyTitle = document.createElement("div");
+    historyTitle.textContent = "Historique des habitudes";
+    historyTitle.className = SELECTORS.historyTitle;
+    return historyTitle;
+  };
+
+  createHistoryTable = (habits) => {
     const table = document.createElement("table");
-    table.classList.add("history-table");
+    table.className = SELECTORS.historyTable;
     table.appendChild(this.createHeaderRow(habits));
     table.appendChild(this.createTableBody(habits));
     return table;
-  }
+  };
 
-  createHeaderRow(habits) {
+  setupCloseButton = (modalContent) => {
+    const closeButton = document.createElement("span");
+    closeButton.className = SELECTORS.closeButton.slice(1);
+    closeButton.innerHTML = "&times;";
+    closeButton.onclick = this.hideModal;
+    modalContent.appendChild(closeButton);
+  };
+
+  createHeaderRow = (habits) => {
     const headerRow = document.createElement("tr");
     headerRow.appendChild(this.createTableCell("th", "Habitude"));
     this.getUniqueSortedDates(habits).forEach((date) => {
       headerRow.appendChild(this.createTableCell("th", date));
     });
     return headerRow;
-  }
+  };
 
-  createTableBody(habits) {
+  createTableBody = (habits) => {
     const tbody = document.createElement("tbody");
     habits.forEach((habit) => {
       const row = document.createElement("tr");
@@ -100,22 +105,24 @@ class History {
       tbody.appendChild(row);
     });
     return tbody;
-  }
+  };
 
-  createTableCell(type, text, className) {
+  createTableCell = (type, text, className) => {
     const cell = document.createElement(type);
     cell.textContent = text;
-    if (className) cell.classList.add(className);
+    if (className) {
+      cell.classList.add(className);
+    }
     return cell;
-  }
+  };
 
-  getUniqueSortedDates(habits) {
+  getUniqueSortedDates = (habits) => {
     const dates = new Set();
     habits.forEach((habit) => {
       Object.keys(habit.daysDone).forEach((date) => dates.add(date));
     });
     return Array.from(dates).sort((a, b) => new Date(a) - new Date(b));
-  }
+  };
 }
 
 export { History };

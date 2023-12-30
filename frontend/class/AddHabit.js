@@ -4,43 +4,86 @@
 import { api } from "../utils/api.js";
 import { Modal } from "./Modal.js";
 
+const SELECTORS = {
+  habitTitle: "[name='habit-title']",
+};
+
+const ERROR_MESSAGES = {
+  habitTitleEmpty: "Ce champ ne peut pas être vide.",
+};
+
 class AddHabit {
   constructor(formElementId, modalId, onUpdateList) {
     this.formElement = document.getElementById(formElementId);
+    this.habitInput = this.formElement.querySelector(SELECTORS.habitTitle);
     this.modal = new Modal(modalId);
     this.onUpdateList = onUpdateList;
-    this.formElement.addEventListener("submit", this.handleSubmit.bind(this));
+    this.bindEvents();
   }
+
+  bindEvents = () => {
+    this.formElement.addEventListener("submit", this.handleSubmit);
+    this.habitInput.addEventListener("input", this.resetInputStyle);
+  };
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(this.formElement);
-    const habitTitle = formData.get("habit-title");
+    const habitTitle = this.getHabitTitle();
 
-    const today = new Date().toISOString().split("T")[0];
-    const daysDone = {
-      [today]: false,
-    };
+    if (!habitTitle) {
+      this.showInputError("Ce champ ne peut pas être vide.");
+      return;
+    }
 
     try {
+      const daysDone = this.createDaysDone();
       const response = await api.post("/habits", {
-        id: "",
         title: habitTitle,
         daysDone: daysDone,
         isActive: true,
       });
 
-      if (response.status === "success") {
-        console.log("Habitude ajoutée avec succès");
-      } else {
-        console.error("Erreur lors de l'ajout de l'habitude.");
-      }
+      this.handleResponse(response);
     } catch (err) {
-      console.error("Erreur lors de l'ajout de l'habitude :", err);
+      this.handleError(err);
     }
+  };
 
-    this.modal.hide();
-    this.onUpdateList();
+  handleResponse = (response) => {
+    if (response.status === "success") {
+      this.modal.hide();
+      this.onUpdateList();
+    } else {
+      console.error("Erreur lors de l'ajout de l'habitude.");
+    }
+  };
+
+  handleError = (err) => {
+    console.error("Erreur lors de l'ajout de l'habitude.", err);
+  };
+
+  handleInput = () => {
+    this.resetInputStyle();
+  };
+
+  showInputError = () => {
+    this.habitInput.placeholder = ERROR_MESSAGES.habitTitleEmpty;
+    this.habitInput.classList.add("input-error");
+  };
+
+  resetInputStyle = () => {
+    if (this.habitInput.classList.contains("input-error")) {
+      this.habitInput.placeholder = "Nom de l'habitude";
+      this.habitInput.classList.remove("input-error");
+    }
+  };
+
+  getHabitTitle = () => {
+    return this.habitInput.value.trim();
+  };
+
+  createDaysDone = (date = new Date().toISOString().split("T")[0]) => {
+    return { [date]: false };
   };
 }
 

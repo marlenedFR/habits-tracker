@@ -170,6 +170,10 @@ h1 {
   border-radius: 4px;
 }
 
+.input-error::placeholder {
+  color: red;
+}
+
 .history-table {
   min-width: 600px;
   border-collapse: collapse;
