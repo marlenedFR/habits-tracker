@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- frontend//index.html -->
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/M.png" />
@@ -10,19 +10,22 @@
   </head>
   <body>
     <div id="app">
-      <h1>Habits Tracker</h1>
+      <header>
+        <h1>Habits Tracker</h1>
+      </header>
 
-      <div id="habits">
+      <section id="habits">
         <ul id="listHabits"></ul>
-      </div>
+      </section>
 
       <button id="habit-button" class="habitBtn">Ajouter</button>
 
       <div id="add-habit-modal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <p>Ajouter une nouvelle habitude</p>
+          <h2>Ajouter une nouvelle habitude</h2>
           <form id="habit-form">
+            <label for="habit-input">Nom de l'habitude</label>
             <input
               type="text"
               name="habit-title"
@@ -36,16 +39,16 @@
         </div>
       </div>
 
-      <div id="history">
+      <section id="history">
         <button id="history-button" class="historyBtn">Historique</button>
         <div id="history-modal" class="modal">
           <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Historique</h3>
+            <h2>Historique</h2>
             <div id="history-content"></div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
     <script type="module" src="/main.js"></script>
   </body>

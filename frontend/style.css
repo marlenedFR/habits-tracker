@@ -1,12 +1,11 @@
+/* Styles de base */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,6 +21,7 @@ body {
   min-height: 100vh;
 }
 
+/* En-tête */
 h1 {
   font-family: "Roboto", sans-serif;
   color: #213547;
@@ -29,6 +29,7 @@ h1 {
   line-height: 1.1;
 }
 
+/* Contenu de l'application */
 #app {
   display: flex;
   flex-direction: column;
@@ -39,6 +40,7 @@ h1 {
   text-align: center;
 }
 
+/* Liste des habitudes */
 #listHabits {
   display: flex;
   flex-direction: column;
@@ -55,7 +57,6 @@ h1 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background-color 0.1s ease;
-  text-align: center;
   max-width: 350px;
 }
 
@@ -71,19 +72,18 @@ h1 {
 
 .habit-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 10px;
 }
 
+/* Bouton de suppression d'habitude */
 .delete-button {
-  align-items: flex-end;
   padding: 5px 10px;
   background-color: #ffffff;
   border: none;
   cursor: pointer;
 }
 
+/* Boutons d'historique et ajout d'habitude */
 .historyBtn,
 .habitBtn {
   background-color: #5c7aea;
@@ -103,7 +103,7 @@ h1 {
 
 .historyBtn:hover,
 .habitBtn:hover {
-  background-color: #4258c9; /* Changement de couleur au survol */
+  background-color: #4258c9;
   color: #f4f4f4;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -115,6 +115,7 @@ h1 {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Modale */
 .modal {
   display: none;
   justify-content: center;
@@ -144,7 +145,7 @@ h1 {
   left: 50%;
 }
 
-/* Bouton pour fermer la modal */
+/* Bouton pour fermer la modale */
 .close {
   color: #aaa;
   float: right;
@@ -162,6 +163,7 @@ h1 {
   cursor: pointer;
 }
 
+/* Champ de saisie nouvelle habitude */
 #habit-input {
   width: 80%;
   padding: 10px;
@@ -174,6 +176,7 @@ h1 {
   color: red;
 }
 
+/* Tableau d'historique */
 .history-table {
   min-width: 600px;
   border-collapse: collapse;
@@ -200,6 +203,7 @@ h1 {
   padding: 8px;
 }
 
+/* Titre de l'historique */
 .history-title {
   text-align: left;
   font-weight: bold;

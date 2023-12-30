@@ -61,8 +61,6 @@ const routes = async (fastify) => {
     }
   });
 
-  // ... Autres routes ...
-
   fastify.delete("/habits/:id", async (request, reply) => {
     try {
       const habitId = parseInt(request.params.id);
