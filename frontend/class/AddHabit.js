@@ -19,7 +19,7 @@ class AddHabit {
 
     const today = new Date().toISOString().split("T")[0];
     const daysDone = {
-      [today]: true,
+      [today]: false,
     };
 
     try {
@@ -27,6 +27,7 @@ class AddHabit {
         id: "",
         title: habitTitle,
         daysDone: daysDone,
+        isActive: true,
       });
 
       if (response.status === "success") {

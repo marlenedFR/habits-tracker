@@ -14,10 +14,10 @@ class ListHabits {
   displayHabits = async () => {
     try {
       const response = await api.get("/habits");
-      const habits = response.habits;
+      const activeHabits = response.habits.filter((habit) => habit.isActive);
       const today = new Date().toISOString().split("T")[0];
 
-      habits.forEach((habit) => {
+      activeHabits.forEach((habit) => {
         const habitContainer = document.createElement("div");
         habitContainer.classList.add("habit-container");
 
@@ -37,23 +37,31 @@ class ListHabits {
           this.toggleHabits.updateHabit(habit.id, habitIsDone);
         });
 
-        // Ajouter un bouton de suppression à côté de chaque habitude
         const deleteButton = document.createElement("button");
-        deleteButton.textContent = "❌";
+        deleteButton.textContent = "⛔";
         deleteButton.classList.add("delete-button");
         deleteButton.addEventListener("click", (event) => {
-          event.stopPropagation(); // Empêche l'event "click" de se propager au listItem
+          event.stopPropagation();
           this.deleteHabit(habit.id);
         });
-        habitContainer.appendChild(deleteButton); // Ajoute le bouton en tant qu'élément frère du listItem
+        habitContainer.appendChild(deleteButton);
 
-        this.listElement.appendChild(habitContainer); // Ajoute le conteneur dans la liste
+        this.listElement.appendChild(habitContainer);
       });
     } catch (err) {
       console.error(
         "Erreur lors du chargement de la liste des habitudes :",
         err
       );
+    }
+  };
+
+  deleteHabit = async (habitId) => {
+    try {
+      await api.patch(`/habits/${habitId}`, { isActive: false });
+      this.updateList();
+    } catch (err) {
+      console.error("Erreur lors de la suppression de l'habitude :", err);
     }
   };
 

@@ -55,4 +55,17 @@ const getDailyHabits = async () => {
   return todayHabits;
 };
 
-export { loadData, saveData, addHabit, updateHabit, getDailyHabits };
+const deleteHabit = async (habitId) => {
+  const data = await loadData();
+  data.habits = data.habits.filter((habit) => habit.id !== parseInt(habitId));
+  await saveData(data);
+};
+
+export {
+  loadData,
+  saveData,
+  addHabit,
+  updateHabit,
+  getDailyHabits,
+  deleteHabit,
+};

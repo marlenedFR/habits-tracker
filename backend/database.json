@@ -2,25 +2,84 @@
   "habits": [
     {
       "id": 1,
-      "title": "beginJS",
+      "title": "Méditation",
       "daysDone": {
         "2023-01-06": true,
-        "2023-08-11": true,
-        "2023-08-12": true,
-        "2023-12-29": false,
-        "2023-12-30": true
+        "2023-01-07": false,
+        "2023-01-08": true
+      },
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "title": "Exercice physique",
+      "daysDone": {
+        "2023-01-06": true,
+        "2023-01-07": false,
+        "2023-01-08": false
+      },
+      "isActive": false
+    },
+    {
+      "id": 6,
+      "title": "Programmation",
+      "daysDone": {
+        "2023-01-06": true,
+        "2023-01-07": true,
+        "2023-01-08": false,
+        "2023-01-09": true
+      },
+      "isActive": false
+    },
+    {
+      "id": 8,
+      "title": "Apprentissage d'un instrument",
+      "daysDone": {
+        "2023-01-13": true,
+        "2023-01-14": false,
+        "2023-01-15": true
       }
     },
     {
-      "id": 2,
-      "title": "Réseautage",
+      "id": 9,
+      "title": "Noubelle",
       "daysDone": {
-        "2023-08-11": true,
-        "2023-08-12": true,
-        "2023-08-14": true,
-        "2023-12-26": true,
-        "2023-12-30": true
+        "2023-12-30": false
       }
+    },
+    {
+      "id": 10,
+      "title": "Noubelle",
+      "daysDone": {
+        "2023-12-30": false
+      }
+    },
+    {
+      "id": 11,
+      "title": "Noubelle",
+      "daysDone": {
+        "2023-12-30": false
+      }
+    },
+    {
+      "id": 12,
+      "title": "sdfsdfsfdsf",
+      "daysDone": {
+        "2023-12-30": false
+      }
+    },
+    {
+      "id": 13,
+      "title": "qsdqsd",
+      "daysDone": {
+        "2023-12-30": false
+      }
+    },
+    {
+      "id": 14,
+      "title": "test",
+      "daysDone": {},
+      "isActive": true
     }
   ]
 }

@@ -1,4 +1,10 @@
-import { loadData, addHabit, updateHabit, getDailyHabits } from "./data.js";
+import {
+  loadData,
+  addHabit,
+  updateHabit,
+  getDailyHabits,
+  saveData,
+} from "./data.js";
 
 const routes = async (fastify) => {
   fastify.get("/habits", async (request, reply) => {
@@ -52,6 +58,28 @@ const routes = async (fastify) => {
     } catch (err) {
       console.error(err);
       reply.status(500).send("Erreur lors de la récupération des habitudes.");
+    }
+  });
+
+  // ... Autres routes ...
+
+  fastify.delete("/habits/:id", async (request, reply) => {
+    try {
+      const habitId = parseInt(request.params.id);
+      const data = await loadData();
+      const habitIndex = data.habits.findIndex((habit) => habit.id === habitId);
+      if (habitIndex === -1) {
+        reply.code(404).send("Habitude non trouvée.");
+      } else {
+        data.habits[habitIndex].isActive = false;
+        await saveData(data);
+        reply.code(200).send({
+          status: "success",
+          message: "Habitude marquée comme inactive.",
+        });
+      }
+    } catch (err) {
+      reply.code(500).send("Erreur lors de la mise à jour de l'habitude.");
     }
   });
 };

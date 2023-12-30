@@ -38,6 +38,16 @@ const api = {
     }
     return await response.json();
   },
+
+  delete: async (path) => {
+    const response = await fetch(`${BASE_URL}${path}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP. Statut : ${response.status}`);
+    }
+    return await response.json();
+  },
 };
 
 export { api };
