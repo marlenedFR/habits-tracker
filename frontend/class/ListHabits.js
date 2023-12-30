@@ -18,8 +18,12 @@ class ListHabits {
       const today = new Date().toISOString().split("T")[0];
 
       habits.forEach((habit) => {
+        const habitContainer = document.createElement("div");
+        habitContainer.classList.add("habit-container");
+
         const listItem = document.createElement("li");
         listItem.textContent = habit.title;
+        habitContainer.appendChild(listItem);
 
         if (habit.daysDone[today]) {
           listItem.classList.add("habit-done");
@@ -33,7 +37,17 @@ class ListHabits {
           this.toggleHabits.updateHabit(habit.id, habitIsDone);
         });
 
-        this.listElement.appendChild(listItem);
+        // Ajouter un bouton de suppression à côté de chaque habitude
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.classList.add("delete-button");
+        deleteButton.addEventListener("click", (event) => {
+          event.stopPropagation(); // Empêche l'event "click" de se propager au listItem
+          this.deleteHabit(habit.id);
+        });
+        habitContainer.appendChild(deleteButton); // Ajoute le bouton en tant qu'élément frère du listItem
+
+        this.listElement.appendChild(habitContainer); // Ajoute le conteneur dans la liste
       });
     } catch (err) {
       console.error(

@@ -61,12 +61,13 @@ h1 {
   border: 1px solid #28a745;
 }
 
-.habit-not-done {
+#listHabits .habit-not-done {
   background-color: #dc35464e;
   border: 1px solid #dc3545;
 }
 
-button {
+.historyBtn,
+.habitBtn {
   background-color: #5c7aea;
   color: #ffffff;
   border-radius: 8px;
@@ -79,21 +80,23 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre des boutons */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-button:hover {
+.historyBtn:hover,
+.habitBtn:hover {
   background-color: #4258c9; /* Changement de couleur au survol */
   color: #f4f4f4;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre des boutons */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-button:focus,
-button:focus-visible {
+.historyBtn:focus,
+.habitBtn:focus,
+.historyBtn:focus-visible,
+.habitBtn:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Style de base pour la modal */
 .modal {
   display: none;
   justify-content: center;
@@ -108,7 +111,6 @@ button:focus-visible {
   background-color: rgba(0, 0, 0, 0.782);
 }
 
-/* Style du contenu de la modal */
 .modal-content {
   overflow-x: auto;
   background-color: #fefefe;
@@ -142,7 +144,6 @@ button:focus-visible {
   cursor: pointer;
 }
 
-/* Styliser l'input */
 #habit-input {
   width: 80%;
   padding: 10px;
@@ -190,6 +191,29 @@ button:focus-visible {
 
 .cross-mark {
   color: red;
+}
+
+.habit-container {
+  display: flex;
+  align-items: center; /* Centre les éléments verticalement */
+  justify-content: space-between; /* Espace les éléments horizontalement */
+  margin-bottom: 10px; /* Ajoute de l'espace entre les entrées */
+}
+
+.habit-container li {
+  flex-grow: 1; /* Permet à l'élément de liste de prendre l'espace disponible */
+  margin-right: 10px; /* Ajoute de l'espace entre le texte et le bouton */
+}
+
+.delete-button {
+  padding: 5px 10px;
+  background-color: #ffffff; /* Couleur rouge */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  top: -10px;
 }
 
 @media (prefers-color-scheme: light) {

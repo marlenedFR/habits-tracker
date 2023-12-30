@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const HistoryInstance = new History("history-modal");
 
-  document.getElementById("add-habit-button").addEventListener("click", () => {
+  document.getElementById("habit-button").addEventListener("click", () => {
     AddHabitInstance.modal.show();
   });
 
