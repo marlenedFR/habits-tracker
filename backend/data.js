@@ -3,7 +3,6 @@ import fs from "fs/promises";
 
 const filePath = "./database.json";
 
-// Fonctions utilitaires
 const formatDate = (date) => {
   return date.toISOString().slice(0, 10);
 };
