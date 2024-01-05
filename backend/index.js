@@ -1,3 +1,6 @@
+// backend/index.js
+// Enregistre les routes dans le serveur Fastify.
+
 import cors from "@fastify/cors";
 import Fastify from "fastify";
 

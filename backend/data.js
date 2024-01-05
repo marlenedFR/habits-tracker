@@ -1,4 +1,7 @@
 // backend/data.js
+// Interagis avec le fichier database.json pour récupérer et sauvegarder les données.
+// Ce fichier devra être modifié pour utiliser une vraie base de données.
+
 import fs from "fs/promises";
 
 const filePath = "./database.json";

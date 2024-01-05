@@ -1,3 +1,6 @@
+//backend/routes.js
+// Défini les routes de l'API.
+
 import {
   loadData,
   addHabit,

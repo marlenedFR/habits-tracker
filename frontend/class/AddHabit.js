@@ -1,5 +1,5 @@
 //frontend/AddHabit.js
-// Ajouter une habitude via une modale
+// Ajoute une habitude via une modale
 
 import { api } from "../utils/api.js";
 import { Modal } from "./Modal.js";

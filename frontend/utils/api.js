@@ -1,7 +1,7 @@
 // frontend/api.js
 // Gère la communication entre le front et le back. Contient les fonctions pour faire des requêtes HTTP vers le serveur
 
-const BASE_URL = "http://localhost:3000";
+import { BASE_URL } from "./config.js";
 
 const handleResponse = async (response) => {
   if (!response.ok) {

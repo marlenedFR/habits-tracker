@@ -1,5 +1,5 @@
 //frontend/history.js
-// Affiche l'historique des habitudesimport { api } from "../utils/api.js";
+// Affiche l'historique des habitudes
 
 import { api } from "../utils/api.js";
 import { Modal } from "./Modal.js";
