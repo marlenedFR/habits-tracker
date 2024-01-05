@@ -53,7 +53,14 @@ class ListHabits {
 
   createListItem = (habit, today) => {
     const listItem = document.createElement("li");
-    listItem.textContent = habit.title;
+
+    listItem.appendChild(document.createTextNode(habit.title));
+
+    const icon = document.createElement("span");
+    icon.classList.add(habit.daysDone[today] ? "icon-done" : "icon-not-done");
+    icon.textContent = habit.daysDone[today] ? "✅" : "❌";
+    listItem.appendChild(icon);
+
     listItem.classList.add(
       habit.daysDone[today] ? SELECTORS.habitDone : SELECTORS.habitNotDone
     );
@@ -67,6 +74,13 @@ class ListHabits {
     const habitIsDone = !listItem.classList.contains(SELECTORS.habitDone);
     this.toggleHabits.toggleHabit(listItem, habitIsDone);
     this.toggleHabits.updateHabit(habitId, habitIsDone);
+
+    const icon = listItem.querySelector("span");
+    if (icon) {
+      icon.textContent = habitIsDone ? "✅" : "❌";
+      icon.classList.toggle("icon-done", habitIsDone);
+      icon.classList.toggle("icon-not-done", !habitIsDone);
+    }
   };
 
   createDeleteButton = (habitId) => {
