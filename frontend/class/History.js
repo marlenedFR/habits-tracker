@@ -1,15 +1,17 @@
 //frontend/history.js
-// Affiche l'historique des habitudes
+// Gère l'affichage de l'historique des habitudes
 
 import { api } from "../utils/api.js";
 import { Modal } from "./Modal.js";
 
+// Sélecteurs CSS
 const SELECTORS = {
   closeButton: ".close",
   historyTitle: "history-title",
   historyTable: "history-table",
 };
 
+// Messages d'erreur
 const ERROR_MESSAGES = {
   fetchError: "Erreur lors de la récupération des habitudes.",
   buildError: "Erreur lors de la construction de l'historique.",
@@ -28,6 +30,7 @@ class History {
     this.modal.hide();
   };
 
+  // Récupère les données depuis l'API
   fetchData = async () => {
     try {
       const response = await api.get("/habits");
@@ -41,20 +44,25 @@ class History {
     }
   };
 
+  // Construit et affiche l'historique
   buildAndShowHistory = async () => {
     try {
       const habits = await this.fetchData();
       const modalContent = this.modal.getContentElement();
       modalContent.innerHTML = "";
+
+      // Crée le titre et le tableau de l'historique
       modalContent.appendChild(this.createHistoryTitle());
       modalContent.appendChild(this.createHistoryTable(habits));
       this.setupCloseButton(modalContent);
+
       this.showModal();
     } catch (err) {
       console.error(ERROR_MESSAGES.buildError, err);
     }
   };
 
+  // Crée le titre de l'historique
   createHistoryTitle = () => {
     const historyTitle = document.createElement("div");
     historyTitle.textContent = "Historique des habitudes";
@@ -62,60 +70,67 @@ class History {
     return historyTitle;
   };
 
+  // Crée le tableau de l'historique
   createHistoryTable = (habits) => {
     const table = document.createElement("table");
     table.className = SELECTORS.historyTable;
-    table.appendChild(this.createHeaderRow(habits));
-    table.appendChild(this.createTableBody(habits));
+    const uniqueDates = this.getUniqueSortedDates(habits);
+    table.appendChild(this.createHeaderRow(uniqueDates));
+    table.appendChild(this.createTableBody(habits, uniqueDates));
     return table;
   };
 
+  // Crée le bouton de fermeture de la modale
   setupCloseButton = (modalContent) => {
     const closeButton = document.createElement("span");
     closeButton.className = SELECTORS.closeButton.slice(1);
     closeButton.innerHTML = "&times;";
+
     closeButton.onclick = this.hideModal;
     modalContent.appendChild(closeButton);
   };
 
-  createHeaderRow = (habits) => {
+  // Crée la ligne d'en-tête du tableau
+  createHeaderRow = (uniqueDates) => {
     const headerRow = document.createElement("tr");
     headerRow.appendChild(this.createTableCell("th", "Habitude"));
-    this.getUniqueSortedDates(habits).forEach((date) => {
+    uniqueDates.forEach((date) => {
       headerRow.appendChild(this.createTableCell("th", date));
     });
     return headerRow;
   };
 
-  createTableBody = (habits) => {
+  // Crée le corps du tableau
+  createTableBody = (habits, uniqueDates) => {
     const tbody = document.createElement("tbody");
+    // Pour chaque habitude
     habits.forEach((habit) => {
+      // Crée une ligne
       const row = document.createElement("tr");
+      // Ajoute une cellule avec le titre de l'habitude
       row.appendChild(this.createTableCell("td", habit.title));
-      this.getUniqueSortedDates(habits).forEach((date) => {
+      // Pour chaque date unique
+      uniqueDates.forEach((date) => {
+        // Ajoute une cellule avec le statut de l'habitude pour cette date
         const status = habit.daysDone[date] ? "✅" : "❌";
-        row.appendChild(
-          this.createTableCell(
-            "td",
-            status,
-            habit.daysDone[date] ? "check-mark" : "cross-mark"
-          )
-        );
+        row.appendChild(this.createTableCell("td", status));
       });
+      // Ajoute la ligne au tableau
       tbody.appendChild(row);
     });
     return tbody;
   };
 
-  createTableCell = (type, text, className) => {
+  // Crée une cellule du tableau
+  createTableCell = (type, text) => {
+    // Crée une cellule de type `type` avec le contenu `text`
     const cell = document.createElement(type);
+    // Ajoute le contenu `text` à la cellule
     cell.textContent = text;
-    if (className) {
-      cell.classList.add(className);
-    }
     return cell;
   };
 
+  // Récupère les dates uniques et les trie
   getUniqueSortedDates = (habits) => {
     const dates = new Set();
     habits.forEach((habit) => {

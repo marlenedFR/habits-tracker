@@ -58,8 +58,12 @@ h1 {
   cursor: pointer;
   transition: background-color 0.1s ease;
   max-width: 350px;
-  transform: scale(1);
-  transition: transform 0.2s ease;
+  transition: transform 100ms;
+}
+
+#listHabits li:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1px 0.5em #a7a7a775;
 }
 
 #listHabits .habit-done {
@@ -93,10 +97,10 @@ h1 {
 /* Boutons d'historique et ajout d'habitude */
 .historyBtn,
 .habitBtn {
-  background-color: #2564a1;
+  background-color: #165a8a;
   color: #ffffff;
   border-radius: 8px;
-  border: 1px solid #2564a1;
+  border: 1px solid #165a8a;
   padding: 0.6em 1.2em;
   margin-top: 1em;
   margin-bottom: -0.5em;

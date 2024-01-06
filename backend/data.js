@@ -22,12 +22,22 @@ const saveData = async (data) => {
 
 const addHabit = async (newHabit) => {
   const data = await loadData();
-  const maxId = data.habits.reduce(
-    (max, habit) => (habit.id > max ? habit.id : max),
-    0
-  );
-  newHabit.id = maxId + 1;
-  data.habits.push(newHabit);
+  // Vérifier si l'habitude existe déjà (pour ne pas avoir de doublons dans l'historique)
+  const habitExists = data.habits.findIndex((h) => h.title === newHabit.title);
+
+  if (habitExists !== -1) {
+    // Fusionner les données de l'habitude existante avec les nouvelles données
+    data.habits[habitExists].daysDone = {
+      ...data.habits[habitExists].daysDone,
+      ...newHabit.daysDone,
+    };
+    // Mettre à jour le statut de l'habitude
+    data.habits[habitExists].isActive = newHabit.isActive;
+  } else {
+    // Ajouter une nouvelle habitude
+    data.habits.push(newHabit);
+  }
+
   await saveData(data);
   return newHabit;
 };
