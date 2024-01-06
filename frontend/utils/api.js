@@ -10,34 +10,33 @@ const handleResponse = async (response) => {
   return await response.json();
 };
 
-const fetchWithConfig = async (path, config) => {
-  const response = await fetch(`${BASE_URL}${path}`, config);
-  return handleResponse(response);
-};
-
 const api = {
   get: async (path) => {
-    return fetchWithConfig(path, {});
+    const response = await fetch(`${BASE_URL}${path}`);
+    return handleResponse(response);
   },
 
   patch: async (path, data) => {
-    return fetchWithConfig(path, {
+    const response = await fetch(`${BASE_URL}${path}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    return handleResponse(response);
   },
 
   post: async (path, data) => {
-    return fetchWithConfig(path, {
+    const response = await fetch(`${BASE_URL}${path}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    return handleResponse(response);
   },
 
   delete: async (path) => {
-    return fetchWithConfig(path, { method: "DELETE" });
+    const response = await fetch(`${BASE_URL}${path}`, { method: "DELETE" });
+    return handleResponse(response);
   },
 };
 

@@ -53,26 +53,39 @@ const saveData = async (newData) => {
   return data;
 };
 
+// const addHabit = async (newHabit) => {
+//   const data = await loadData();
+//   // Vérifier si l'habitude existe déjà (pour ne pas avoir de doublons dans l'historique)
+//   const habitExists = data.habits.findIndex((h) => h.title === newHabit.title);
+
+//   if (habitExists !== -1) {
+//     // Fusionner les données de l'habitude existante avec les nouvelles données
+//     data.habits[habitExists].daysDone = {
+//       ...data.habits[habitExists].daysDone,
+//       ...newHabit.daysDone,
+//     };
+//     // Mettre à jour le statut de l'habitude
+//     data.habits[habitExists].isActive = newHabit.isActive;
+//   } else {
+//     // Ajouter une nouvelle habitude
+//     data.habits.push(newHabit);
+//   }
+
+//   await saveData(data);
+//   return newHabit;
+// };
+
 const addHabit = async (newHabit) => {
-  const data = await loadData();
-  // Vérifier si l'habitude existe déjà (pour ne pas avoir de doublons dans l'historique)
-  const habitExists = data.habits.findIndex((h) => h.title === newHabit.title);
-
-  if (habitExists !== -1) {
-    // Fusionner les données de l'habitude existante avec les nouvelles données
-    data.habits[habitExists].daysDone = {
-      ...data.habits[habitExists].daysDone,
-      ...newHabit.daysDone,
-    };
-    // Mettre à jour le statut de l'habitude
-    data.habits[habitExists].isActive = newHabit.isActive;
-  } else {
-    // Ajouter une nouvelle habitude
-    data.habits.push(newHabit);
+  // Insère la nouvelle habitude dans la table 'habits'
+  const { data, error } = await supabase.from("habits").insert([newHabit]);
+  if (error) {
+    // Gère l'erreur si l'insertion échoue
+    throw new Error(
+      `Erreur lors de l'ajout de la nouvelle habitude: ${error.message}`
+    );
   }
-
-  await saveData(data);
-  return newHabit;
+  // Retourne les données de la nouvelle habitude
+  return data[0];
 };
 
 const updateHabit = async (request, reply) => {
