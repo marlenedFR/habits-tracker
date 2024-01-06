@@ -1,23 +1,56 @@
 // backend/data.js
 // Interagis avec le fichier database.json pour récupérer et sauvegarder les données.
-// Ce fichier devra être modifié pour utiliser une vraie base de données.
+// Ce fichier a été modifié pour utiliser Supabase.
 
-import fs from "fs/promises";
+// import fs from "fs/promises";
+// const filePath = "./database.json";
 
-const filePath = "./database.json";
+import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
+
+dotenv.config(); // Charge les variables d'environnement
+
+// Configuration du client Supabase
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const formatDate = (date) => {
   return date.toISOString().slice(0, 10);
 };
 
+// const loadData = async () => {
+//   const data = await fs.readFile(filePath, "utf8");
+//   return JSON.parse(data);
+// };
+
+// const saveData = async (data) => {
+//   const dataJSON = JSON.stringify(data, null, 2);
+//   await fs.writeFile(filePath, dataJSON, "utf8");
+// };
+
 const loadData = async () => {
-  const data = await fs.readFile(filePath, "utf8");
-  return JSON.parse(data);
+  try {
+    const { data, error } = await supabase.from("habits").select("*");
+
+    if (error) {
+      console.log("Erreur lors du chargement des données :", error);
+      return null;
+    }
+
+    console.log("Données chargées :", data);
+    return data;
+  } catch (err) {
+    console.log("Exception lors du chargement des données :", err);
+  }
 };
 
-const saveData = async (data) => {
-  const dataJSON = JSON.stringify(data, null, 2);
-  await fs.writeFile(filePath, dataJSON, "utf8");
+const saveData = async (newData) => {
+  const { data, error } = await supabase.from("habits").insert([newData]);
+
+  if (error) throw error;
+
+  return data;
 };
 
 const addHabit = async (newHabit) => {

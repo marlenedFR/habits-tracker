@@ -36,11 +36,16 @@ class ListHabits {
   // Récupère les habitudes depuis l'API
   fetchHabits = async () => {
     const response = await api.get("/habits");
-    return response.habits.filter((habit) => habit.isActive);
+    console.log("Réponse de l'API:", response);
+    if (response) {
+      return response.filter((habit) => habit.is_active);
+    }
+    return [];
   };
 
   // Affiche les habitudes
   renderHabits = (habits) => {
+    console.log("Habitudes à afficher:", habits);
     const today = new Date().toISOString().split("T")[0];
     habits.forEach((habit) =>
       this.listElement.appendChild(this.createHabitItem(habit, today))
@@ -62,9 +67,12 @@ class ListHabits {
   createListItem = (habit, today) => {
     const listItem = document.createElement("li");
     listItem.textContent = habit.title;
-    listItem.appendChild(this.createStatusIcon(habit, today));
+
+    const isDoneToday = habit.daysDone && habit.daysDone[today];
+
+    listItem.appendChild(this.createStatusIcon(isDoneToday));
     listItem.classList.add(
-      habit.daysDone[today] ? SELECTORS.habitDone : SELECTORS.habitNotDone
+      isDoneToday ? SELECTORS.habitDone : SELECTORS.habitNotDone
     );
     listItem.addEventListener("click", () =>
       this.handleListItemClick(listItem, habit.id)
@@ -73,10 +81,10 @@ class ListHabits {
   };
 
   // Crée une icône de statut pour une habitude
-  createStatusIcon = (habit, today) => {
+  createStatusIcon = (isDoneToday) => {
     const icon = document.createElement("span");
-    icon.classList.add(habit.daysDone[today] ? "icon-done" : "icon-not-done");
-    icon.textContent = habit.daysDone[today] ? "✅" : "❌";
+    icon.classList.add(isDoneToday ? "icon-done" : "icon-not-done");
+    icon.textContent = isDoneToday ? "✅" : "❌";
     return icon;
   };
 
