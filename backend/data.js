@@ -32,6 +32,7 @@ const formatDate = (date) => {
 const loadData = async () => {
   try {
     const { data, error } = await supabase.from("habits").select("*");
+    console.log("/data.js - Données chargées :", data);
 
     if (error) {
       console.log("Erreur lors du chargement des données :", error);
@@ -76,14 +77,34 @@ const saveData = async (newData) => {
 // };
 
 const addHabit = async (newHabit) => {
-  // Insère la nouvelle habitude dans la table 'habits'
-  const { data, error } = await supabase.from("habits").insert([newHabit]);
+  console.log(
+    "data.js - Avant l'insertion de la nouvelle habitude :",
+    newHabit
+  );
+  const { data, error } = await supabase
+    .from("habits")
+    .insert([
+      {
+        title: newHabit.title,
+        is_active: true,
+      },
+    ])
+    .select();
+
   if (error) {
-    // Gère l'erreur si l'insertion échoue
+    console.log(
+      "data.js - Erreur lors de l'insertion de la nouvelle habitude :",
+      error
+    );
     throw new Error(
       `Erreur lors de l'ajout de la nouvelle habitude: ${error.message}`
     );
   }
+  console.log(
+    "data.js - Après l'insertion de la nouvelle habitude, données retournées :",
+    data[0]
+  );
+
   // Retourne les données de la nouvelle habitude
   return data[0];
 };

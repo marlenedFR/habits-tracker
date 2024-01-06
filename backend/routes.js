@@ -12,7 +12,12 @@ import {
 const routes = async (fastify) => {
   fastify.get("/habits", async (request, reply) => {
     try {
+      console.log("/routes.js - Avant d'appeler loadData()");
       const data = await loadData();
+      console.log(
+        "/routes.js - Après avoir appelé loadData(), données chargées :",
+        data
+      );
 
       reply.send(data);
     } catch (err) {
