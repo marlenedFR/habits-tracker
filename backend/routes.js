@@ -12,13 +12,12 @@ import {
 const routes = async (fastify) => {
   fastify.get("/habits", async (request, reply) => {
     try {
-      console.log("/routes.js - Avant d'appeler loadData()");
+      // console.log("/routes.js - Avant d'appeler loadData()");
       const data = await loadData();
-      console.log(
-        "/routes.js - Après avoir appelé loadData(), données chargées :",
-        data
-      );
-
+      // console.log(
+      //   "/routes.js - Après avoir appelé loadData(), données chargées :",
+      //   data
+      // );
       reply.send(data);
     } catch (err) {
       reply.code(500).send("Erreur lors de la récupération des habitudes.");
@@ -75,10 +74,12 @@ const routes = async (fastify) => {
       const data = await loadData();
       const habitIndex = data.habits.findIndex((habit) => habit.id === habitId);
       if (habitIndex === -1) {
+        console.log("routes.js - Habitude non trouvée.");
         reply.code(404).send("Habitude non trouvée.");
       } else {
         data.habits[habitIndex].isActive = false;
         await saveData(data);
+        console.log("routes.js - Habitude marquée comme inactive.");
         reply.code(200).send({
           status: "success",
           message: "Habitude marquée comme inactive.",

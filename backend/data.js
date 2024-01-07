@@ -32,17 +32,17 @@ const formatDate = (date) => {
 const loadData = async () => {
   try {
     const { data, error } = await supabase.from("habits").select("*");
-    console.log("/data.js - Données chargées :", data);
+    // console.log("/data.js - Données chargées :", data);
 
     if (error) {
       console.log("Erreur lors du chargement des données :", error);
       return null;
     }
 
-    console.log("Données chargées :", data);
+    // console.log("Données chargées :", data);
     return data;
   } catch (err) {
-    console.log("Exception lors du chargement des données :", err);
+    console.log("Erreur lors du chargement des données :", err);
   }
 };
 
